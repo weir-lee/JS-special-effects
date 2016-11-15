@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>屏幕滑动效果</title>
+    <style>
+        * {margin: 0; padding: 0;}
+        html, body, ul, ul li{
+            width: 100%;
+            height: 100%;
+        }
+        ul, ol {  list-style: none;}
+        #direction {
+            position: fixed;
+            top: 50px;
+            left: 10px;
+            border: 1px solid orange;
+            width: 200px;
+            line-height: 50px;
+            text-align: center;
+        }
+        #direction li { cursor: pointer;}
+    </style>
+</head>
+<body>
+<ul id="screen">
+    <li>关注</li>
+    <li>动态</li>
+    <li>新闻</li>
+    <li>体育</li>
+    <li>国际</li>
+</ul>
+
+<ol id="direction">
+    <li>关注</li>
+    <li>动态</li>
+    <li>新闻</li>
+    <li>体育</li>
+    <li>国际</li>
+</ol>
+</body>
+<script src="my.js"></script>
+<script>
+    var screen = $("screen");
+    var uLis= screen.children;
+    var direct = $("direction");
+    var oLis = direct.children;
+    var aColor = ["gray", "gold", "pink", "yellowgreen", "skyblue"];
+    var topVal = 0;
+    var leader = 0, target = 0, timer = null;
+
+    for(var i = 0; i < oLis.length; i++){
+        // 给ul和ol中的li添加背景色
+        uLis[i].style.backgroundColor = aColor[i];
+        oLis[i].style.backgroundColor = aColor[i];
+
+        // 给ol中的li添加点击事件
+        oLis[i].index = i;
+        oLis[i].onclick = function(){
+            clearInterval(timer);
+            // 得到屏幕要滚动到什么位置
+            topVal = uLis[this.index].offsetTop;
+            //屏幕缓动
+            target = topVal;
+            timer = setInterval(function(){
+                leader = leader + (target - leader)/10;
+                window.scrollTo(0, leader);
+            }, 30);
+        }
+    }
+</script>
+</html>

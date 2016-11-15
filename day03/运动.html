@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>运动</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            position: absolute;
+            left:0;
+            top: 40px;
+        }
+        #div2 {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            position: absolute;
+            left:0;
+            top: 160px;
+        }
+    </style>
+</head>
+<body>
+<button id="btn250">btn250</button>
+<button id="btn600">btn600</button>
+<button id="btn400">btn400</button>
+<div id="div1"></div>
+<div id="div2"></div>
+</body>
+</html>
+<script>
+    function $(id) { return document.getElementById(id);}
+    var btn250 = $("btn250");
+    var btn600 = $("btn600");
+    var btn400 = $("btn400");
+    var div1 = $("div1");
+    var div2 = $("div2")
+
+    btn250.onclick = function(){
+        animate(div1, 200, 3);
+    }
+    btn600.onclick = function(){
+        animate(div1, 600, 6);
+    }
+    btn400.onclick = function(){
+        animate(div2, 400, 5);
+    }
+
+    function animate(obj, target, speed){
+        clearInterval(obj.timer);
+        var speed = target>obj.offsetLeft ?  Math.abs(speed):-Math.abs(speed);
+        obj.timer = setInterval(function(){
+            if(Math.abs(target-obj.offsetLeft) < Math.abs(speed)){
+                clearInterval(obj.timer);
+                obj.style.left = target + "px";
+            }else{
+                //alert(110);
+                obj.style.left = obj.offsetLeft + speed + "px";
+            }
+        },30);
+
+    }
+
+</script>

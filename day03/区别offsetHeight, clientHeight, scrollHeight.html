@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>offsetHeight，clientHeight和scrollHeight的区别</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            padding:10px;
+            border: 8px solid black;
+            margin: 100px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    1321564613eiowfj lejflsdkjfodsijf lds fvdsjfdsljfosidjf
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+    wo wwoshi neirong wodfv, vjdkvjnhhdvnckdjsnc,cndsjvfdskljfvldks
+</div>
+</body>
+</html>
+<script>
+    var div = document.getElementsByTagName("div")[0];
+    console.log("offsetHeight: " + div.offsetHeight); // border+padding+height
+    console.log("clientHeight: " + div.clientHeight); // padding + height
+    console.log("scrollHeight: " + div.scrollHeight ); //padding + 内容的高度
+</script>

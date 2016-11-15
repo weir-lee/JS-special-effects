@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>轮播图1</title>
+    <style>
+        * { margin: 0; padding: 0;}
+        ul, ol { list-style: none;}
+        .slider {
+            width: 500px;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #pics {
+            width: 700%;
+            height: 100%;
+            background-color: pink;
+            position: absolute;
+        }
+        li { float: left;}
+        #squares {
+            width: 140px;
+            height: 18px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            margin-left: -70px;
+
+        }
+        #squares li {
+            width: 18px;
+            height: 18px;
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
+            margin-right: 10px;
+            background-color: #fff;
+        }
+        #squares .current{
+            background-color: #ff0;
+        }
+
+
+    </style>
+    <script>
+    function animate(obj, target){
+        clearInterval(obj.timer);
+        var speed = target>obj.offsetLeft ? 10:-10;
+        obj.timer = setInterval(function(){
+            if(Math.abs(target - obj.offsetLeft) <= Math.abs(speed)){
+                clearInterval(obj.timer);
+                obj.style.left = target + "px";
+            }else{
+                obj.style.left = obj.offsetLeft + speed + "px";
+            }
+        } ,30);
+    }
+
+
+
+    window.onload = function(){
+
+
+        function $(id){return document.getElementById(id);}
+        var pics = $("pics");
+        var uLis = pics.children[0].children;
+//        console.log(uLis.length);
+        var squares = $("squares");
+
+        // 动态添加小方块
+        for(var i = 0, len = uLis.length; i < len; i++){
+            var oLi = document.createElement("li");
+            oLi.innerHTML = i+1;
+            squares.appendChild(oLi);
+        }
+        squares.children[0].className = "current";
+
+        // hover小方块显示相应的图片
+        var oLis = squares.children;
+        for(var i = 0, len = oLis.length; i < len; i++){
+            oLis[i].index = i;
+            oLis[i].onmouseover = function(){
+                for(var j = 0, len = oLis.length; j < len; j++){
+                    oLis[j].className = "";
+                }
+                this.className = "current";
+               // animate(pics, -this.index * uLis[0].offsetWidth);
+
+            }
+        }
+        // 克隆第一张图到ul最后面
+        pics.children[0].appendChild(uLis[0].cloneNode(true));
+//        console.log(uLis.length);
+
+
+
+        // 自动播放图片
+        // num用来控制播放第几张图片
+        var num = 0;
+        function autoPlay(obj){
+            setInterval(function(){
+                num++;
+                if(num >= 5){
+                    obj.style.left = 0;
+                    num = 0;
+                }else{
+                   obj.style.left = obj.offsetLeft - 500 + "px";
+                }
+            }, 500);
+        }
+        autoPlay(pics);
+
+    }
+    </script>
+</head>
+<body>
+<div class="slider">
+    <div id="pics">
+        <ul>
+            <li><img src="images/1.jpg" alt=""/></li>
+            <li><img src="images/2.jpg" alt=""/></li>
+            <li><img src="images/3.jpg" alt=""/></li>
+            <li><img src="images/4.jpg" alt=""/></li>
+            <li><img src="images/5.jpg" alt=""/></li>
+        </ul>
+    </div>
+    <ol id="squares"></ol>
+</div>
+</body>
+</html>

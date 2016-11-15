@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>垂直滚动条</title>
+    <style>
+        .box  {
+            width: 300px;
+            height: 500px;
+            border: 1px solid black;
+            position: relative;
+            overflow: hidden;
+        }
+        .content{
+            height: auto;
+            padding: 5px 20px 5px 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .scroll {
+            width: 20px;
+            height:100% ;
+            background: #ccc;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .bar {
+            width: 100%;
+            height: 100%;
+            background-color: #14d3ff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <div class="content">
+        我是开头，我是开头，我是开头。啦啦啦，啦啦啦。。。。
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
+        我是结尾，啦啦啦啦
+    </div>
+
+    <div class="scroll">
+        <div class="bar"></div>
+    </div>
+</div>
+</body>
+
+<script>
+    var box = document.getElementById("box");
+    var content = box.children[0];
+    var scroll = box.children[1];
+    var bar = scroll.children[0];
+
+    // 计算滚动条的高度，内容越多，滚动条越短: 容器的高度/内容的高度*容器的高度
+    var barH = parseInt(box.offsetHeight/content.offsetHeight*box.offsetHeight);
+    if(barH > scroll.offsetHeight){
+        barH = scroll.offsetHeight;
+    }
+    bar.style.height = barH + "px";
+
+    startScroll(bar);
+
+    function startScroll(obj){
+        obj.onmousedown = function(event){
+            var ev = event || window.event;
+            var valTop = ev.clientY - this.offsetTop; // 计算scroll距离顶部的距离
+            var that = this;
+
+            document.onmousemove = function(event){
+                var ev = event || window.event;
+                var barTop = ev.clientY - valTop; // 计算鼠标相对大盒子的距离
+                var scale = barTop/(scroll.offsetHeight - that.offsetHeight);
+                var contentTop = parseInt(scale*(content.offsetHeight-box.offsetHeight));
+
+                if(barTop<0){
+                    barTop = 0;
+                }else if(barTop > scroll.offsetHeight - that.offsetHeight){
+                    barTop = scroll.offsetHeight - that.offsetHeight;
+                }else{
+        // 内容盒子要移动的距离 = (内容高度-盒子高度)/(盒子高度-滑块高度)*(内容高度-盒子高度)
+        // 文字内容跟随鼠标上滑
+                    content.style.top = -contentTop + "px";
+                }
+                // 滑块位置跟随鼠标
+                obj.style.top = barTop + "px";
+
+                //清楚拖拽滚动条时选中的文字
+                window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+            }
+        }
+
+        document.onmouseup = function(){
+            document.onmousemove = null;
+        }
+    }
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

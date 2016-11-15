@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>旋转木马轮播图-交换json数据</title>
+    <link rel="stylesheet" href="css/css.css"/>
+</head>
+<body>
+<div class="wrap" id="wrap">
+    <div class="slide" id="slide">
+        <ul>
+            <li><a href="#"><img src="images/slidepic1.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/slidepic2.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/slidepic3.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/slidepic4.jpg" alt=""/></a></li>
+            <li><a href="#"><img src="images/slidepic5.jpg" alt=""/></a></li>
+        </ul>
+        <div class="arrow" id="arrow">
+            <a href="javascript:;" class="prev"></a>
+            <a href="javascript:;" class="next"></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="js/animate.js"></script>
+<script>
+    //  存储了每个图片的信息
+    var json = [
+        {   //  1
+            width:400,
+            top:20,
+            left:50,
+            opacity:20,
+            z:2
+        },
+        {  // 2
+            width:600,
+            top:70,
+            left:0,
+            opacity:80,
+            z:3
+        },
+        {   // 3
+            width:800,
+            top:100,
+            left:200,
+            opacity:100,
+            z:4
+        },
+        {  // 4
+            width:600,
+            top:70,
+            left:600,
+            opacity:80,
+            z:3
+        },
+        {   //5
+            width:400,
+            top:20,
+            left:750,
+            opacity:20,
+            z:2
+        }
+    ];
+    function $(id) { return document.getElementById(id);}
+
+    var wrap = $("wrap");
+    var arrow = $("arrow");
+    var btns = arrow.children;
+    var lis = document.getElementsByTagName("li");
+
+    setStyleForImgs();
+
+    wrap.onmouseover = function(){
+        animate(arrow,{"opacity":100});
+    }
+    wrap.onmouseout = function(){
+        animate(arrow,{"opacity":0});
+    }
+
+    for(var i in btns){
+        btns[i].onclick = function(){
+
+            if(this.className == "prev"){
+                change(false);
+            }else{
+                change(true);
+            }
+        }
+    }
+
+    // 交换json数据
+    function change(flag){
+        if(flag){
+            // 点击向右按钮，删除最后一个json,并把最后一个json插入到最前面
+            json.unshift(json.pop());
+
+        }else{
+            json.push(json.shift());
+        }
+
+        // 把json数据给每张图片
+        setStyleForImgs();
+    }
+
+    function setStyleForImgs(){
+        // 把json数据给每张图片
+        for(var i=0; i<lis.length; i++){
+            animate(lis[i],{
+                width:json[i].width,
+                top:json[i].top,
+                left:json[i].left,
+                opacity:json[i].opacity,
+                zIndex:json[i].z
+            });
+        }
+    }
+
+</script>

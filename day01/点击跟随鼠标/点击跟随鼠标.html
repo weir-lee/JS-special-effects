@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>点击跟随鼠标</title>
+    <style>
+        * { margin: 0; padding: 0;}
+        #demo, img {
+            width: 80px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <script>
+        window.onload =function(){
+            var demo = document.getElementById("demo");
+            var leaderX = 0, targetX = 0, leaderY = 0, targetY = 0;
+
+            document.onclick = function(event){
+                //鼠标在x和y两个方向上运动
+                var oEvent = event || window.event;
+                targetX = oEvent.clientX - demo.offsetWidth/2;
+                targetY = oEvent.clientY - demo.offsetHeight/2;
+                console.log(targetX);
+                console.log(targetY);
+            }
+
+
+            setInterval(function(){
+
+                leaderX = leaderX  + (targetX-leaderX)/10;
+                leaderY = leaderY + (targetY-leaderY)/10;
+
+                demo.style.left = leaderX + "px";
+                demo.style.top = leaderY + "px";
+            },30);
+        }
+    </script>
+</head>
+<body>
+<div id="demo"><img src="img.jpg" alt=""/></div>
+</body>
+</html>

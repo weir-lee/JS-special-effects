@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>筋斗云</title>
+    <style>
+        * {margin: 0; padding: 0;}
+        ul {list-style: none;}
+        body {background-color: #000;}
+        .nav {
+            width: 800px;
+            height: 42px;
+            margin: 100px auto;
+            border-radius: 5px;
+            background: #fff url(images/rss.png) no-repeat right center;
+            position: relative;
+        }
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 83px;
+            height: 42px;
+            background: url(images/cloud.gif) no-repeat;
+        }
+        .nav ul {
+            width: 100%;
+            height: 100%;
+            position: relative;
+
+        }
+        .nav ul li {
+            float: left;
+            width: 83px;
+            height: 42px;
+            line-height: 42px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            function $(id) {return document.getElementById(id);}
+            var cloud = $("nav").children[0];
+            var ul = $("nav").children[1];
+            var lis = ul.children;
+            var leader= 0, target=0;
+            var timer = null;
+            var current = 0; //存放被点击时的offsetLeft
+
+            for(var i= 0,len=lis.length; i<len; i++){
+                lis[i].onmouseover = function(){
+                    target = this.offsetLeft; //把左侧的距离给target
+                }
+
+                lis[i].onclick = function(){
+                    current =  this.offsetLeft;
+                }
+
+                lis[i].onmouseout = function(){
+                    target = current;  //鼠标移出时，筋斗云移动到上次被点击的地方
+                }
+            }
+
+            timer = setInterval(function(){
+                leader = leader + (target-leader)/5;
+                    cloud.style.left = leader + "px";
+            } ,20);
+        }
+    </script>
+</head>
+<body>
+<div class="nav" id="nav">
+    <span class="cloud"></span>
+    <ul>
+        <li>首页新闻</li>
+        <li>师资力量</li>
+        <li>活动策划</li>
+        <li>企业文化</li>
+        <li>招聘信息</li>
+        <li>公司简介</li>
+        <li>上海校区</li>
+        <li>广州校区</li>
+    </ul>
+</div>
+</body>
+</html>

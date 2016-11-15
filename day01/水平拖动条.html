@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>水平拖动条</title>
+    <style>
+        * {margin:0; padding:0;}
+        .box {
+            margin: 100px auto;
+            width: 600px;
+            height: 12px;
+            background-color: #ccc;
+            position: relative;
+        }
+        .small {
+            width: 0;
+            height: 100%;
+            background-color: #307698;
+        }
+        .cake {
+            width: 14px;
+            height: 26px;
+            background-color: #307698;
+            position: absolute;
+            top: -7px;
+            left: 0px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+    window.onload = function(){
+        var box = document.getElementById("box");
+        var small = box.children[0];
+        var cake = box.children[1];
+
+        //alert(cake.offsetLeft);
+
+        cake.onmousedown = function(){
+            //cake.onmousemove = function(event){
+            // 拖动一定要写在down里面
+            // 拖动事件加给document，不要加给cake
+            document.onmousemove = function(event){
+                var ev = event || window.event;
+                // 求鼠标的相对长条的坐标
+                var x = ev.clientX - cake.offsetParent.offsetLeft;
+                if(x < 0){
+                    x = 0;
+                }else if(x > cake.offsetParent.offsetWidth){
+                    x = cake.offsetParent.offsetWidth;
+                }
+                cake.style.left = x + "px";
+                small.style.width = x + "px";
+            }
+        }
+
+        // 鼠标抬起时停止拖动，这里事件要加给document，不要加给box
+        //box.onmouseup = function(){
+        document.onmouseup = function(){
+            document.onmousemove = null;  // 抬起鼠标不做任何操作
+        }
+    }
+    </script>
+</head>
+<body>
+<div class="box" id="box">
+    <div class="small"></div>
+    <div class="cake"></div>
+</div>
+</body>
+</html>

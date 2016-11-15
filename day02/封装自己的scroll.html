@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>封装自己的scroll</title>
+    <style>
+        body { height: 6000px;}
+    </style>
+</head>
+<body>
+
+</body>
+<script>
+    function scroll(){
+        if(window.pageXOffset != null){     // ie9+和其他浏览器
+            return {
+                left: window.pageXOffset,
+                top: window.pageYOffset
+            }
+        }else if(document.compatMode == "CSS1Compat"){
+            // 判断不是怪异模式，即没有申明文档头DTD
+            // 不是怪异模式，声明了DTD的支持此写法，谷歌除外
+            return {
+                left: document.documentElement.scrollLeft,
+                top: document.documentElement.scrollTop
+            }
+        }else{
+            // 剩下的就是怪异模式
+            return {
+                left: document.body.scrollLeft,
+                top: document.body.scrollTop
+            }
+        }
+    }
+
+    window.onscroll = function(){
+        document.title = scroll().left + "," + scroll().top;
+    }
+</script>
+</html>

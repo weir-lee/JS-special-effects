@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>轮播图2</title>
+    <style>
+        * { margin: 0; padding: 0;}
+        ul, ol { list-style: none;}
+        #slider {
+            width: 500px;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+            padding: 5px;
+        }
+        #screen {
+            width: 100%;
+            height: 100%;
+            background-color: pink;
+            position: relative;
+            overflow: hidden;
+        }
+        #ul {
+            width: 700%;
+            position: absolute;
+        }
+        li { float: left;}
+        #ol {
+            width: 140px;
+            height: 18px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            margin-left: -70px;
+        }
+        #ol li {
+            width: 18px;
+            height: 18px;
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
+            margin-right: 10px;
+            background-color: #fff;
+        }
+        #ol .current{
+            background-color: #ff0;
+        }
+    </style>
+    <script>
+        function animate(obj, target){
+            clearInterval(obj.timer);
+            var speed = obj.offsetLeft<target ? 15:-15;
+            obj.timer = setInterval(function(){
+                if(Math.abs(target-obj.offsetLeft) < Math.abs(speed)){
+                    clearInterval(timer);
+                    obj.style.left = target + "px";
+                }else{
+                    obj.style.left = obj.offsetLeft + speed + "px";
+                }
+            }, 20);
+        }
+
+        window.onload = function(){
+            function $(id) { return document.getElementById(id);}
+            var slider = $("slider");
+            var screen = $("screen");
+            var ul = screen.children[0];
+            var ulLis = ul.children;
+            var ol = $("ol");
+
+            // 1.克隆第一张图片
+            ul.appendChild(ul.children[0].cloneNode(true));
+            // 2.创建小li
+            for(var i=0; i<ulLis.length-1; i++){
+                var li = document.createElement("li");
+                li.innerHTML = i+1;
+                ol.appendChild(li);
+            }
+            ol.children[0].className = "current";
+
+            // 3.动画部分   hover小方块移动到相应的图片
+            var olLis = ol.children;
+            for(var i= 0, len = olLis.length; i < len; i++){
+                olLis[i].index = i;
+                olLis[i].onmouseover = function(){
+                    for(var j = 0; j < len; j++){
+                        olLis[j].className = "";
+                    }
+                    olLis[this.index].className = "current";
+                    animate(ul, -this.index*ulLis[0].offsetWidth);
+                    key = square = this.index;
+                }
+            }
+
+            // 4.图片自动播放，添加定时器
+            var timer = null;   //轮播图的定时器
+            var key = 0;    // 当前播放第几张   全局变量
+            var square = 0;     // 全局变量
+            timer = setInterval(autoPlay, 1000);  // 开启轮播图定时器
+            function autoPlay(){
+                key++;          // 先++
+                if(key > ulLis.length-1){   // 再判断 // 播放第六张图片时
+                    ul.style.left = 0;  // 迅速跳回至第一张图片
+                    key = 1;            // 因为第6张图片就是第一张，所以下次要播放第二张图片
+                }
+                animate(ul, -key*ulLis[0].offsetWidth);     // 再执行
+
+                // 小方块随着图片自动播放而变化
+                square++;        // 控制小方块
+                if(square > olLis.length-1){
+                    square = 0;
+                }
+                for(var i = 0; i < olLis.length; i++){
+                    olLis[i].className = "";
+                }
+                olLis[square].className = "current";
+            }
+
+            slider.onmouseover = function(){
+                clearInterval(timer);     // 鼠标经过停止自动播放
+            }
+            slider.onmouseout = function(){
+                timer = setInterval(autoPlay, 1000);  // 鼠标移开开启自动播放
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div id="slider">
+    <div id="screen">
+        <ul id="ul">
+            <li><img src="images/1.jpg" alt=""/></li>
+            <li><img src="images/2.jpg" alt=""/></li>
+            <li><img src="images/3.jpg" alt=""/></li>
+            <li><img src="images/4.jpg" alt=""/></li>
+            <li><img src="images/5.jpg" alt=""/></li>
+        </ul>
+    </div>
+    <ol id="ol"></ol>
+</div>
+</body>
+</html>

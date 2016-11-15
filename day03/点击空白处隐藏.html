@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>点击空白处隐藏</title>
+    <style>
+        * { margin:0; padding: 0;}
+        body { height: 6000px;}
+        #loginBox {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin: -150px 0 0 -150px;
+            display: none;
+            background-color: #fff;
+        }
+        #mask {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+        .content {width:10px;}
+    </style>
+</head>
+<body>
+    <a href="javascript:;" id="login">登录</a>
+    <a href="">注册</a>
+    <div id="mask"></div>
+    <div id="loginBox"></div>
+  <div class="content">
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈
+      哈哈123123
+      123123
+
+  </div>
+
+</body>
+</html>
+<script>
+    function $(id) {return document.getElementById(id);}
+    var loginBox = $("loginBox");
+    var mask = $("mask");
+    var login = $("login");
+
+    login.onclick = function(ev){
+        loginBox.style.display = "block";
+        mask.style.display = "block";
+        // 隐藏页面的滚动条
+        document.body.style.overflow = "hidden";
+
+        // 阻止事件冒泡
+        var event = ev || window.event;
+        if(event && event.stopPropagation){
+            event.stopPropagation();
+        }else{
+            event.cancelBubble = true;
+        }
+    }
+
+    document.onclick = function(ev){
+        var event = ev || window.event;
+        // 获取发生事件的对象的id
+        var targetId = event.target ? event.target.id : event.srcElement.id;
+        // 判断点击的是否是登录框，点击登录框以外的区域则遮照层消失
+        if(targetId != "loginBox"){
+            loginBox.style.display = "none";
+            mask.style.display = "none";
+            // 显示页面的滚动条
+            document.body.style.overflow = "visible";
+        }
+    }
+
+</script>

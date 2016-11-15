@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>3放大镜-黄色盒子跟随-老师版本</title>
+    <style>
+        * {margin:0; padding:0;}
+        img {vertical-align: top;}
+        .box {
+            width: 350px;
+            height: 350px;
+            border: 1px solid #ccc;
+            margin: 100px;
+            position: relative;
+        }
+        .big {
+            width: 400px;
+            height: 500px;
+            border: 1px solid #ccc;
+            position: absolute;
+            top: 0;
+            left: 360px;
+            overflow: hidden;
+            display: none;
+        }
+        .small {
+            position: relative;
+            width: 350px;
+            height: 350px;
+        }
+        .mask {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,0,0.4);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            cursor: move;
+        }
+        .big img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var mask = document.getElementById("mask");
+            var small = document.getElementById("small");
+            var big = document.getElementById("big");
+            var box = small.parentNode;
+            var bigImg = big.children[0];
+
+            small.onmouseover = function(){
+                //鼠标经过，显示绿盒子和大图
+                mask.style.display = "block";
+                big.style.display = "block";
+            }
+
+            small.onmouseout = function(){
+                mask.style.display = "none";
+                big.style.display = "none";
+            }
+
+            small.onmousemove = function(event){
+                var ev = event || window.event;
+                //鼠标在盒子内的坐标:鼠标的坐标减去盒子的边距
+                /*
+                 鼠标在盒子内的横坐标=鼠标的横坐标-盒子的左边距，因为small的父亲定位了，
+                 small和父亲一样宽和高，所以如果写成ev.client-this.offsetLeft就错了，
+                 this.offsetLeft为0.所以应该是鼠标的横坐标-父亲的offsetLeft。
+                 */
+/*
+                // 计算鼠标在盒子内的坐标
+                var x = ev.clientX - box.offsetLeft;
+                var y = ev.clientY - box.offsetTop;
+
+*/
+                // 计算绿盒子的横坐标: 鼠标在盒子内的横坐标-盒子宽的一半
+                var xx = ev.clientX - box.offsetLeft - mask.offsetWidth/2;
+                var yy = ev.clientY - this.offsetParent.offsetTop - mask.offsetHeight/2;
+
+                // 绿盒子跟随鼠标走
+                if(xx < 0){
+                    xx = 0;
+                }else if(xx >= small.offsetWidth-mask.offsetWidth){
+                    xx = small.offsetWidth-mask.offsetWidth;
+                }
+
+                if(yy < 0){
+                    yy = 0;
+                }else if(yy > small.offsetHeight-mask.offsetHeight){
+                    yy = small.offsetHeight-mask.offsetHeight;
+                }
+
+                mask.style.left = xx + "px";
+                mask.style.top = yy + "px";
+
+                //mask移动的时，移动大图片.
+                // 小图和大图呈倍数关系
+                bigImg.style.left = -big.offsetWidth/small.offsetWidth * xx + "px";
+                bigImg.style.top = -big.offsetHeight/small.offsetHeight * yy + "px";
+            }
+
+        }
+    </script>
+</head>
+<body>
+<div class="box">
+    <div class="small" id="small">
+        <img src="images/001.jpg" alt=""/>
+        <div class="mask" id="mask"></div>
+    </div>
+    <div class="big" id="big"><img src="images/0001.jpg" alt=""/></div>
+</div>
+</body>
+</html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>

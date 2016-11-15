@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>选中文字后弹出一个框</title>
+    <style>
+        div {
+            width: 300px;
+            height: 200px;
+            margin: 20px;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+
+        }
+        #text {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div id="text">
+    我是第一段文字我是第一段文字我是第一段文字我是第一段文字我是第一段文字
+    我是第一段文字我是第一段文字我是第一段文字我是第一段文字我是第一段文字
+    我是第一段文字我是第一段文字我是第一段文字我是第一段文字我是第一段文字
+    我是第一段文字我是第一段文字我是第一段文字我是第一段文字我是第一段文字
+    <span id="box"></span>
+</div>
+<div id="another">
+    盒子盒子盒子都是开发教程都是成都科技师范vdsk等级考试v的话父烦死飞机九点十分
+    盒子盒子盒子都是开发教程都是成都科技师范vdsk等级考试v的话父烦死飞机九点十分
+    盒子盒子盒子都是开发教程都是成都科技师范vdsk等级考试v的话父烦死飞机九点十分
+    盒子盒子盒子都是开发教程都是成都科技师范vdsk等级考试v的话父烦死飞机九点十分
+</div>
+</body>
+</html>
+<script>
+    function $(id) { return document.getElementById(id);}
+    var text = $("text");
+    var box = $("box");
+    var txt = ""; // 用来保存选中的文字
+
+    text.onmouseup = function (ev){
+        var event = ev || window.event;
+        var l = event.clientX - this.offsetLeft;
+        var t = event.clientY - this.offsetTop;
+
+        // 判断是否选中文字
+        if(window.getSelection){
+            txt = window.getSelection().toString();
+        }else{
+            txt = document.selection.createRange().text;
+        }
+        // 如果选中文字，则显示弹框
+        if(txt){
+            showBox(l, t,txt);
+        }
+
+        // 把 onclick 改成 onmousedown
+        document.onmousedown = function (ev){
+            var event = ev || window.event;
+            var targetId = event.target ? event.target.id : event.srcElement.id;
+            if(targetId != "box"){
+                box.style.display = "none";
+            }
+        }
+    }
+
+    function showBox(posX, posY,txt){
+        // 加定时器可以去除IE的bug:选中文字的时候弹框里面的文字也被选中了
+        setTimeout(function(){
+            box.style.display = "block";
+            box.style.left = posX + "px";
+            box.style.top = posY + "px";
+            box.innerHTML = txt;
+        }, 500);
+    }
+
+
+
+</script>

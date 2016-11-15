@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>事件冒泡</title>
+</head>
+<body>
+<button id="btn">点击</button>
+</body>
+</html>
+<script>
+    var btn = document.getElementById("btn");
+    document.onclick = function(){
+        alert("点击了文档");
+    }
+    btn.onclick = function(){
+// 点击按钮也会弹窗，原因是按钮属于document的儿子，点击按钮发生事件，所以document也会触发事件。这就是事件冒泡
+        alert("按钮");
+    }
+</script>

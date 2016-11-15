@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>阻止事件冒泡</title>
+</head>
+<body>
+<button id="btn">点击</button>
+</body>
+</html>
+<script>
+    var btn = document.getElementById("btn");
+    document.onclick = function(){
+        alert("点击了文档");
+    }
+    btn.onclick = function(ev){
+        alert("按钮");
+        // 1.获取事件对象；
+        var event = ev || window.event;
+        if(event && event.stopPropagation){  // 注意这里event.stopPropagation后面没有括号
+            // 标准浏览器 w3c
+            event.stopPropagation();  // stopPropagation是event的一个方法
+        }else{
+            // ie6.7.8
+            event.cancelBubble = true;  // cancelBubble 是event的一个属性
+        }
+
+    }
+</script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var num = 0;
+/*
+    window.onresize = function(){
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        num++;
+        console.log(width + ", " + num);  // ie678,屏幕拖动一像素，事件处理程序会执行两次
+    }
+*/
+    window.onresize = throttle(function(){
+        var width= window.innerWidth || document.documentElement.clientWidth;
+        num++;
+        console.log(width + ", " + num);
+    },300);
+
+    function throttle(fn, delay){
+        var timer = null;
+        return function(){
+            clearTimeout(timer);
+            timer = setTimeout(fn,delay);
+        }
+    }
+</script>

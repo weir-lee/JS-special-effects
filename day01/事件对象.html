@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>事件对象</title>
+    <script>
+        document.onclick = function(event){
+            // alert(event.clientX + ", " + event.clientY);  //高级浏览器支持，ie6,7,8不支持
+            alert(window.event.clientX + ", " + window.event.clientY);  //ie6,7,8支持
+/*
+
+            // 兼容写法
+            var oEvent = event || window.event;
+            alert(oEvent.clientX + ", " + oEvent.clientY);
+*/
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

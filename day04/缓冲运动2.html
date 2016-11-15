@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>缓冲运动2</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            position: absolute;
+            left: 400px;
+        }
+    </style>
+</head>
+<body>
+<button>缓冲运动</button>
+<div></div>
+</body>
+</html>
+<script>
+    var btn = document.getElementsByTagName("button")[0];
+    var div = document.getElementsByTagName("div")[0];
+
+    var target = 0;
+    var timer = null;
+    btn.onclick = function(){
+        timer = setInterval(function(){
+            var speed = (target - div.offsetLeft)/10;
+            speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
+            if(div.offsetLeft == target){
+                clearInterval(timer);
+            }else{
+                div.style.left = div.offsetLeft + speed + "px";
+            }
+        }, 30);
+    }
+</script>

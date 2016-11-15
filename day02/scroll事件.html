@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>scroll的兼容写法</title>
+    <style>
+        body {  height: 8000px;}
+    </style>
+</head>
+<body>
+
+</body>
+<script>
+    window.onscroll = function(){
+       // document.title = document.body.scrollTop; // 谷歌和没有DTD DOCTYPE的
+        document.title = document.documentElement.scrollTop; //火狐和其他浏览器
+       // document.title = window.pageYOffset; // ie9+ 和最新浏览器都认识
+       //兼容写法
+       // var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    }
+</script>
+</html>
